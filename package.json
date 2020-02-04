@@ -1,0 +1,17 @@
+{
+  "name": "combine-json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/combine-json.js",
+  "preferGlobal": true,
+  "bin": "./src/combine-json.js",
+  "scripts": {
+    "link": "npm link",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^3.0.0"
+  }
+}
