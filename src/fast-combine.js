@@ -54,7 +54,7 @@ function findFirstBracketType(fileFd, buffer, position) {
     return findFirstBracketType(fileFd, buffer, position + 8)
 }
 
-function getFirstBracketType(fd) {
+function getFirstBracketType(fd, file, filePath) {
     let buffer = new Int8Array(8);
     return findFirstBracketType(fd, buffer, 0);
 }
@@ -75,7 +75,7 @@ async function combineJson(files, dir, outputDir) {
         
         // let content = require(inputFile);
         const fd = fs.openSync(`${filePath}${file}`);
-        let firstBracketType = getFirstBracketType(fd);
+        let firstBracketType = getFirstBracketType(fd, file, filePath);
         let lastBracket = undefined;
         
         
@@ -106,9 +106,15 @@ async function combineJson(files, dir, outputDir) {
             await combineFiles;
 
             
+            // console.log(' apres', { start, lastBracket });
+            
             let last = (index === numberOfFiles - 1);      
-
+            console.log({ last });
+            
+            
             if (!last) {
+                
+                
                 let coma = path.resolve(__dirname, '../assets/coma')
                 let comaWrite = fs.createWriteStream(outputFile, {
                     flags: 'a'

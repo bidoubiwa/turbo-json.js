@@ -17,5 +17,13 @@ npm run link
 ## Usage 
 `combine-json [inputDir] [outputFile(optionnal)]`
 ```bash
-combine-json misc myOutPutFile.json
+combine-json directory
 ```
+default output file is combined.json at the root of where you execute the cli.
+
+## Try it out
+Go at the root of the CLI 
+```bash
+combine-json misc
+```
+it will generate a combined.json file with all the json object found in misc.
