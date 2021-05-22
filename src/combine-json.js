@@ -10,7 +10,7 @@ const {
 function findLastBracket(filePath, fd, buffer, position) {
     let charRed = fs.readSync(fd, buffer, 0, 8, position);
     let array = [...buffer].map(char => String.fromCharCode(char));
-    let bracket = array.indexOf("]"); 
+    let bracket = array.indexOf("]");
     if (charRed === 0) return null;
     if (bracket > -1) return position + bracket + 1;
     fs.closeSync(fd)
@@ -26,13 +26,13 @@ function getLastBracket(filePath, fd, position) {
 function findFirstBracketType(fileFd, buffer, position) {
     let charRed = fs.readSync(fileFd, buffer, 0, 8)
     let array = [...buffer].map(char => String.fromCharCode(char));
-    let curly = array.indexOf("{"); 
-    let bracket = array.indexOf("["); 
+    let curly = array.indexOf("{");
+    let bracket = array.indexOf("[");
     if (charRed === 0) return null;
     if ((curly < bracket || bracket === -1) && curly > -1) return {
         type: "{",
         pos: position + curly
-    } 
+    }
     if ((bracket < curly || curly === -1) && bracket > -1) return {
         type: "[",
         pos: position + bracket
@@ -45,7 +45,7 @@ function getFirstBracketType(fd) {
     return findFirstBracketType(fd, buffer, 0);
 }
 
-async function combine({inputFiles, inputDirPath, outputFilePath}) { 
+async function combine({inputFiles, inputDirPath, outputFilePath}) {
     fs.writeFileSync(outputFilePath, "["); // start of new file
     const numberOfFiles = inputFiles.length
     numberOfFiles.map(( fileName, index) => {
@@ -56,7 +56,7 @@ async function combine({inputFiles, inputDirPath, outputFilePath}) {
             flags: 'a'
         });
 
-        let start = (isArray) ? firstBracketType.pos + 1 : firstBracketType.pos; 
+        let start = (isArray) ? firstBracketType.pos + 1 : firstBracketType.pos;
 
     })
     for (let index = 0; index < numberOfFiles; index++) {
@@ -66,8 +66,8 @@ async function combine({inputFiles, inputDirPath, outputFilePath}) {
         const fd = fs.openSync(`${inputDirPath}${file}`);
         let firstBracketType = getFirstBracketType(fd);
         let lastBracket = undefined;
-        
-        
+
+
         if (firstBracketType) {
             let isArray =  firstBracketType.type === '[';
             if (isArray) {
@@ -79,12 +79,12 @@ async function combine({inputFiles, inputDirPath, outputFilePath}) {
                 flags: 'a'
             });
             // open source file for reading
-            let start = (isArray) ? firstBracketType.pos + 1 : firstBracketType.pos; 
+            let start = (isArray) ? firstBracketType.pos + 1 : firstBracketType.pos;
             var r = fs.createReadStream(inputFile, {
                 start,
                 end: lastBracket
             });
-            
+
             r.pipe(w);
             const combineFiles = new Promise(function(resolve, reject) {
                 w.on('close', function() {
@@ -94,8 +94,8 @@ async function combine({inputFiles, inputDirPath, outputFilePath}) {
               });
             await combineFiles;
 
-            
-            let last = (index === numberOfFiles - 1);      
+
+            let last = (index === numberOfFiles - 1);
 
             if (!last) {
                 let coma = path.resolve(__dirname, '../assets/coma')

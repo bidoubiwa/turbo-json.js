@@ -27,7 +27,7 @@ function inputFilesAndDir({ inputDir }) {
 
 function resolveOutputFilePath({ fileName }) {
   const workingDir = process.cwd();
-  const outputFilePath = outputFile({ dirName: workingDir, fileName}); 
+  const outputFilePath = outputFile({ dirName: workingDir, fileName});
   createFileIfNotExist(outputFilePath)
   return outputFilePath
 }
