@@ -1,30 +1,16 @@
-#!/usr/bin/env node
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path')
-
-function outputPath(outputDir) {
-    let fileName = (process.argv[3]) ? process.argv[3] : 'combined.json';
-    return `${outputDir}/${fileName}`;
-}
-
-function createIfNotExist(file) {
-    if (fs.existsSync(file)) {
-        fs.writeFileSync(file, "");
-    }
-}
-
-function listOfJsonFiles(files){
-    return  files.reduce((acc, file)=>{
-        if (path.extname(file)=== '.json') return [...acc, file];
-        return acc;
-    }, []);
-}
+const {
+    inputFilesAndDir,
+    resolveOutputFilePath,
+    filterNonJson
+  } = require('./file_utils')
 
 function findLastBracket(filePath, fd, buffer, position) {
     let charRed = fs.readSync(fd, buffer, 0, 8, position);
     let array = [...buffer].map(char => String.fromCharCode(char));
-    let bracket = array.indexOf("]"); 
+    let bracket = array.indexOf("]");
     if (charRed === 0) return null;
     if (bracket > -1) return position + bracket + 1;
     fs.closeSync(fd)
@@ -40,13 +26,13 @@ function getLastBracket(filePath, fd, position) {
 function findFirstBracketType(fileFd, buffer, position) {
     let charRed = fs.readSync(fileFd, buffer, 0, 8)
     let array = [...buffer].map(char => String.fromCharCode(char));
-    let curly = array.indexOf("{"); 
-    let bracket = array.indexOf("["); 
+    let curly = array.indexOf("{");
+    let bracket = array.indexOf("[");
     if (charRed === 0) return null;
     if ((curly < bracket || bracket === -1) && curly > -1) return {
         type: "{",
         pos: position + curly
-    } 
+    }
     if ((bracket < curly || curly === -1) && bracket > -1) return {
         type: "[",
         pos: position + bracket
@@ -59,26 +45,29 @@ function getFirstBracketType(fd) {
     return findFirstBracketType(fd, buffer, 0);
 }
 
-async function combineJson(files, dir, outputDir) {
-    
-    let outputFile = outputPath(outputDir); 
-    let filePath = dir + ((dir[dir.length - 1] === '/') ? '' : '/') // add slash at the end of the dir if it is not there yet
-    createIfNotExist(outputFile)
-    
-    fs.writeFileSync(outputFile, "["); // start of new file
-    const jsonFiles = listOfJsonFiles(files);
-    const numberOfFiles = jsonFiles.length
+async function combine({inputFiles, inputDirPath, outputFilePath}) {
+    fs.writeFileSync(outputFilePath, "["); // start of new file
+    const numberOfFiles = inputFiles.length
+    numberOfFiles.map(( fileName, index) => {
+        let inputFile = `${inputDirPath}${fileName}`;
+
+        // open destination file for appending
+        const writeStreamPath = fs.createWriteStream(outputFilePath, {
+            flags: 'a'
+        });
+
+        let start = (isArray) ? firstBracketType.pos + 1 : firstBracketType.pos;
+
+    })
     for (let index = 0; index < numberOfFiles; index++) {
-        let file = jsonFiles[index];
-        let inputFile = `${filePath}${file}`;
-        // console.log({ inputFile });
-        
-        // let content = require(inputFile);
-        const fd = fs.openSync(`${filePath}${file}`);
+        let file = inputFiles[index];
+        let inputFile = `${inputDirPath}${file}`;
+
+        const fd = fs.openSync(`${inputDirPath}${file}`);
         let firstBracketType = getFirstBracketType(fd);
         let lastBracket = undefined;
-        
-        
+
+
         if (firstBracketType) {
             let isArray =  firstBracketType.type === '[';
             if (isArray) {
@@ -86,16 +75,16 @@ async function combineJson(files, dir, outputDir) {
                 lastBracket =  getLastBracket(inputFile, fd, stats.size - 8) - 2;
             }
             // open destination file for appending
-            var w = fs.createWriteStream(outputFile, {
+            var w = fs.createWriteStream(outputFilePath, {
                 flags: 'a'
             });
             // open source file for reading
-            let start = (isArray) ? firstBracketType.pos + 1 : firstBracketType.pos; 
+            let start = (isArray) ? firstBracketType.pos + 1 : firstBracketType.pos;
             var r = fs.createReadStream(inputFile, {
                 start,
                 end: lastBracket
             });
-            
+
             r.pipe(w);
             const combineFiles = new Promise(function(resolve, reject) {
                 w.on('close', function() {
@@ -105,12 +94,12 @@ async function combineJson(files, dir, outputDir) {
               });
             await combineFiles;
 
-            
-            let last = (index === numberOfFiles - 1);      
+
+            let last = (index === numberOfFiles - 1);
 
             if (!last) {
                 let coma = path.resolve(__dirname, '../assets/coma')
-                let comaWrite = fs.createWriteStream(outputFile, {
+                let comaWrite = fs.createWriteStream(outputFilePath, {
                     flags: 'a'
                 });
                 let comaRead = fs.createReadStream(coma);
@@ -124,7 +113,7 @@ async function combineJson(files, dir, outputDir) {
                 await addComa
             } else {
                 let closingBracket = path.resolve(__dirname, '../assets/closing_bracket');
-                let closingBracketWrite = fs.createWriteStream(outputFile, {
+                let closingBracketWrite = fs.createWriteStream(outputFilePath, {
                     flags: 'a'
                 });
                 let closingBracketRead = fs.createReadStream(closingBracket);
@@ -147,34 +136,17 @@ async function combineJson(files, dir, outputDir) {
 }
 
 
-function determineDir(dir) {
-    dir = path.resolve(dir);
-    if (!fs.existsSync(dir)) {  // test for Fully Qualified path
-        console.log(`Error: ${process.argv[2]} no such named directory`);
-        process.exit()
+async function combineJson(inputDir, outputFile = undefined) {
+    try {
+        const { inputDirPath, filesName } = inputFilesAndDir({ inputDir })
+        const outputFilePath = resolveOutputFilePath({ fileName: outputFile })
+        const inputFiles = filterNonJson({ filesName });
+        await combine({inputFiles, inputDirPath, outputFilePath})
+    }catch(e) {
+        throw(e)
     }
-    return dir;
 }
 
-(async () => {
-    console.log();
-    
-    
-    if (process.argv.length === 2) {
-        console.log(chalk.red('Error: Missing path argument'));
-    } 
-    else {
-        try {
-            let dir = determineDir(process.argv[2])   
-            console.log({ dir });
-            let outputDir = process.cwd();
-            let files = fs.readdirSync(dir)
-            
-            await combineJson(files, dir, outputDir)
-        }catch(e) {
-            throw(e)
-        }
-    }
-})()
+module.exports = combineJson
 
 
