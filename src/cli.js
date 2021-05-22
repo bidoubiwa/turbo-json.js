@@ -2,17 +2,15 @@
 const combineJson = require('./combine-json');
 
 (async () => {
-    console.log(combineJson);
+  console.log(combineJson);
   try {
     if (process.argv.length === 2) {
-        console.log(chalk.red('Error: Missing path argument'));
+      console.log(chalk.red('Error: Missing path argument'));
+    } else {
+      await combineJson(process.argv[2], process.argv[3]);
     }
-    else {
-      await combineJson(process.argv[2], process.argv[3])
-    }
-  }
-  catch(e) {
+  } catch (e) {
     console.error(e);
-    throw(e)
+    throw e;
   }
-})()
+})();

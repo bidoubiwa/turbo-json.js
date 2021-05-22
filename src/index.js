@@ -1,4 +1,3 @@
-const combineJson = require('./combine-json')
+const combineJson = require('./combine-json');
 
-
-module.exports = combineJson
+module.exports = combineJson;
