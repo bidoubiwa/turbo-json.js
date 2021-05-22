@@ -1,6 +1,6 @@
 # Combine-json
 
-Combine-json is a CLI tool that combines all json files found in a directory into one big json file.
+Combine-json is a CLI tool that combines all json files found in a directory into one big json file using streaming.
 
 It takes as argument a directory in which to find the json files and a output file name in which the json files will combined.
 The json file will be created in the directory where the CLI is used.

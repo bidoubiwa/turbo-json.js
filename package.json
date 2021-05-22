@@ -2,12 +2,12 @@
   "name": "combine-json",
   "version": "1.0.0",
   "description": "",
-  "main": "src/combine-json.js",
+  "main": "src/index.js",
   "preferGlobal": true,
-  "bin": "./src/combine-json.js",
+  "bin": "./src/cli.js",
   "scripts": {
     "link": "npm link",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./src/cli.js misc"
   },
   "author": "",
   "license": "ISC",
