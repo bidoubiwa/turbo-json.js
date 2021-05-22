@@ -1,11 +1,12 @@
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 
 function resolveDir({ dir }) {
   dir = path.resolve(dir);
-  if (!fs.existsSync(dir)) {  // test for Fully Qualified path
-      console.log(`Error: ${dir} no such named directory`);
-      process.exit()
+  if (!fs.existsSync(dir)) {
+    // test for Fully Qualified path
+    console.log(`Error: ${dir} no such named directory`);
+    process.exit();
   }
   return dir;
 }
@@ -16,33 +17,33 @@ function outputFile({ dirName, fileName = undefined }) {
 }
 
 function inputFilesAndDir({ inputDir }) {
-  const resolvedDir = resolveDir({ dir: inputDir})
-  const inputDirPath = resolvedDir + ((resolvedDir[resolvedDir.length - 1] === '/') ? '' : '/') // add slash at the end of the dir if it is not there yet
-  const filesName = fs.readdirSync(inputDirPath) // read all files names in dir
+  const resolvedDir = resolveDir({ dir: inputDir });
+  const inputDirPath =
+    resolvedDir + (resolvedDir[resolvedDir.length - 1] === '/' ? '' : '/'); // add slash at the end of the dir if it is not there yet
+  const filesName = fs.readdirSync(inputDirPath); // read all files names in dir
   return {
-      inputDirPath,
-      filesName
-  }
+    inputDirPath,
+    filesName,
+  };
 }
 
 function resolveOutputFilePath({ fileName }) {
   const workingDir = process.cwd();
-  const outputFilePath = outputFile({ dirName: workingDir, fileName});
-  createFileIfNotExist(outputFilePath)
-  return outputFilePath
+  const outputFilePath = outputFile({ dirName: workingDir, fileName });
+  createFileIfNotExist(outputFilePath);
+  return outputFilePath;
 }
-
 
 function createFileIfNotExist({ file }) {
   if (fs.existsSync(file)) {
-      fs.writeFileSync(file, "");
+    fs.writeFileSync(file, '');
   }
 }
 
-function filterNonJson({ filesName }){
-  return  filesName.reduce((acc, file)=>{
-      if (path.extname(file)=== '.json') return [...acc, file];
-      return acc;
+function filterNonJson({ filesName }) {
+  return filesName.reduce((acc, file) => {
+    if (path.extname(file) === '.json') return [...acc, file];
+    return acc;
   }, []);
 }
 
@@ -52,5 +53,5 @@ module.exports = {
   inputFilesAndDir,
   resolveOutputFilePath,
   createFileIfNotExist,
-  filterNonJson
-}
+  filterNonJson,
+};

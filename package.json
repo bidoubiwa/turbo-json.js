@@ -7,11 +7,15 @@
   "bin": "./src/cli.js",
   "scripts": {
     "link": "npm link",
+    "lint": "prettier --write .",
     "test": "./src/cli.js misc"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chalk": "^3.0.0"
+  },
+  "devDependencies": {
+    "prettier": "2.3.0"
   }
 }
