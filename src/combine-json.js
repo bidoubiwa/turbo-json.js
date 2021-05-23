@@ -5,98 +5,62 @@ const {
   inputFilesAndDir,
   resolveOutputFilePath,
   filterNonJson,
-} = require('./file_utils');
+  createOutputArrayFile,
+  openFile,
+  fileSize,
+} = require('./file-utils');
+const { jsonRootType, closingArrayIndex } = require('./json-root-type');
 
-function findLastBracket(filePath, fd, buffer, position) {
-  let charRed = fs.readSync(fd, buffer, 0, 8, position);
-  let array = [...buffer].map((char) => String.fromCharCode(char));
-  let bracket = array.indexOf(']');
-  if (charRed === 0) return null;
-  if (bracket > -1) return position + bracket + 1;
-  fs.closeSync(fd);
-  fd = fs.openSync(filePath);
-  return getLastBracket(filePath, fd, position - 8);
-}
-
-function getLastBracket(filePath, fd, position) {
-  let buffer = new Int8Array(8);
-  return findLastBracket(filePath, fd, buffer, position);
-}
-
-function findFirstBracketType(fileFd, buffer, position) {
-  let charRed = fs.readSync(fileFd, buffer, 0, 8);
-  let array = [...buffer].map((char) => String.fromCharCode(char));
-  let curly = array.indexOf('{');
-  let bracket = array.indexOf('[');
-  if (charRed === 0) return null;
-  if ((curly < bracket || bracket === -1) && curly > -1)
-    return {
-      type: '{',
-      pos: position + curly,
-    };
-  if ((bracket < curly || curly === -1) && bracket > -1)
-    return {
-      type: '[',
-      pos: position + bracket,
-    };
-  return findFirstBracketType(fileFd, buffer, position + 8);
-}
-
-function getFirstBracketType(fd) {
-  let buffer = new Int8Array(8);
-  return findFirstBracketType(fd, buffer, 0);
-}
+const BUFFER_SIZE = 8;
 
 async function combine({ inputFiles, inputDirPath, outputFilePath }) {
-  fs.writeFileSync(outputFilePath, '['); // start of new file
+  createOutputArrayFile(outputFilePath);
   const numberOfFiles = inputFiles.length;
-  numberOfFiles.map((fileName, index) => {
+
+  for (let index = 0; index < numberOfFiles; index++) {
+    let fileName = inputFiles[index];
     let inputFile = `${inputDirPath}${fileName}`;
 
-    // open destination file for appending
-    const writeStreamPath = fs.createWriteStream(outputFilePath, {
-      flags: 'a',
+    const inputFileFd = openFile(inputFile);
+
+    const { isArray, typeIndex, empty } = jsonRootType({
+      fd: inputFileFd,
+      bufferSize: BUFFER_SIZE,
     });
-
-    let start = isArray ? firstBracketType.pos + 1 : firstBracketType.pos;
-  });
-  for (let index = 0; index < numberOfFiles; index++) {
-    let file = inputFiles[index];
-    let inputFile = `${inputDirPath}${file}`;
-
-    const fd = fs.openSync(`${inputDirPath}${file}`);
-    let firstBracketType = getFirstBracketType(fd);
     let lastBracket = undefined;
 
-    if (firstBracketType) {
-      let isArray = firstBracketType.type === '[';
+    if (true) {
       if (isArray) {
-        let stats = fs.statSync(inputFile);
-        lastBracket = getLastBracket(inputFile, fd, stats.size - 8) - 2;
+        lastBracket =
+          closingArrayIndex({
+            inputFile,
+            fd: inputFileFd,
+            position: fileSize(inputFile) - BUFFER_SIZE,
+          }) - 2;
       }
       // open destination file for appending
-      var w = fs.createWriteStream(outputFilePath, {
+      var writeStream = fs.createWriteStream(outputFilePath, {
         flags: 'a',
       });
+
       // open source file for reading
-      let start = isArray ? firstBracketType.pos + 1 : firstBracketType.pos;
-      var r = fs.createReadStream(inputFile, {
-        start,
+      let startPosition = isArray ? typeIndex + 1 : typeIndex;
+      var readStream = fs.createReadStream(inputFile, {
+        start: startPosition,
         end: lastBracket,
       });
 
-      r.pipe(w);
-      const combineFiles = new Promise(function (resolve, reject) {
-        w.on('close', function () {
-          resolve('foo');
-          console.log('done writing');
+      readStream.pipe(writeStream);
+
+      await new Promise(function (resolve) {
+        writeStream.on('close', function () {
+          resolve();
         });
       });
-      await combineFiles;
 
       let last = index === numberOfFiles - 1;
 
-      if (!last) {
+      if (!last && !empty) {
         let coma = path.resolve(__dirname, '../assets/coma');
         let comaWrite = fs.createWriteStream(outputFilePath, {
           flags: 'a',
@@ -105,12 +69,11 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
         comaRead.pipe(comaWrite);
         const addComa = new Promise(function (resolve, reject) {
           comaWrite.on('close', function () {
-            resolve('foo');
-            console.log('done writing coma');
+            resolve();
           });
         });
         await addComa;
-      } else {
+      } else if (last) {
         let closingBracket = path.resolve(
           __dirname,
           '../assets/closing_bracket'
@@ -122,21 +85,22 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
         closingBracketRead.pipe(closingBracketWrite);
         const addclosingBracket = new Promise(function (resolve, reject) {
           closingBracketWrite.on('close', function () {
-            resolve('foo');
-            console.log('done writing closingBracket');
+            resolve();
           });
         });
         await addclosingBracket;
       }
+
       console.log(
         chalk.green(
           'file: ' +
-            chalk.blue.underline.bold(file) +
+            chalk.blue.underline.bold(fileName) +
             ` has been added! last : ${last}, index: ${index}, numberOfFiles: ${numberOfFiles}`
         )
       );
     }
   }
+  return 1;
 }
 
 async function combineJson(inputDir, outputFile = undefined) {
@@ -144,7 +108,7 @@ async function combineJson(inputDir, outputFile = undefined) {
     const { inputDirPath, filesName } = inputFilesAndDir({ inputDir });
     const outputFilePath = resolveOutputFilePath({ fileName: outputFile });
     const inputFiles = filterNonJson({ filesName });
-    await combine({ inputFiles, inputDirPath, outputFilePath });
+    return await combine({ inputFiles, inputDirPath, outputFilePath });
   } catch (e) {
     throw e;
   }

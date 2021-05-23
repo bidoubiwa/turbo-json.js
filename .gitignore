@@ -91,6 +91,8 @@ lerna-debug.log
 Thumbs.db
 
 combined.json
+/combined.json
+./combined.json
 
 # Ignore artifacts:
 build
