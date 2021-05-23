@@ -40,6 +40,19 @@ test('Tests on multiple empty files', async () => {
   expect(data).toEqual(expected);
 });
 
+test('Tests if on 1 file containing one primitive', async () => {
+  const res = await combineJson(
+    'misc/one_primitive',
+    'test-output/combine_a_single_primitive.json'
+  );
+  const data = JSON.parse(
+    fs.readFileSync(`${process.cwd()}/test-output/combine_a_single_primitive.json`, 'utf-8')
+  );
+  const expected = [1];
+  expect(res).toBe(1);
+  expect(data).toEqual(expected);
+});
+
 test('Tests if on 1 files', async () => {
   const res = await combineJson(
     'misc/one_file',
