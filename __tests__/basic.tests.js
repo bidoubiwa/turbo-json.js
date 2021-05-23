@@ -66,7 +66,7 @@ test('Tests if on 1 files', async () => {
   expect(data).toEqual(expected);
 });
 
-test('Tests if on 2 files', async () => {
+test('Tests if on all files', async () => {
   const res = await combineJson('misc', 'test-output/combine_all.json');
   const data = JSON.parse(
     fs.readFileSync(`${process.cwd()}/test-output/combine_all.json`, 'utf-8')
