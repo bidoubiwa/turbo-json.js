@@ -5,15 +5,10 @@ on:
   push:
     # trying and staging branches are for BORS config
     branches:
-      - trying
-      - staging
       - main
 
 jobs:
   tests:
-    # Will not run if the event is a PR to bump-meilisearch-v* (so a pre-release PR)
-    # Will still run for each push to bump-meilisearch-v*
-    if: github.event_name != 'pull_request' || !startsWith(github.base_ref, 'bump-meilisearch-v')
     runs-on: ubuntu-latest
     strategy:
       matrix:
