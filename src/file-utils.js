@@ -47,11 +47,27 @@ function filterNonJson({ filesName }) {
   }, []);
 }
 
+function createOutputArrayFile(outputFilePath) {
+  fs.writeFileSync(outputFilePath, '['); // start of new file
+}
+
+function openFile(file) {
+  return fs.openSync(file);
+}
+
+function fileSize(file) {
+  let stats = fs.statSync(file);
+  return stats.size;
+}
+
 module.exports = {
+  fileSize,
   resolveDir,
   outputFile,
   inputFilesAndDir,
   resolveOutputFilePath,
   createFileIfNotExist,
   filterNonJson,
+  createOutputArrayFile,
+  openFile,
 };
