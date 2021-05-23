@@ -1,6 +1,5 @@
 const fs = require('fs');
 const chalk = require('chalk');
-const path = require('path');
 const {
   inputFilesAndDir,
   resolveOutputFilePath,
@@ -10,9 +9,7 @@ const {
   fileSize,
 } = require('./file-utils');
 const { jsonRootType, closingArrayIndex } = require('./json-root-type');
-const util = require('util')
 
-const { finished } = require('stream');
 const BUFFER_SIZE = 8;
 
 async function combine({ inputFiles, inputDirPath, outputFilePath }) {
