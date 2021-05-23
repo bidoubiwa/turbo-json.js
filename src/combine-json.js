@@ -73,8 +73,7 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
           });
         });
         await addComa;
-      }
-      else if (last) {
+      } else if (last) {
         let closingBracket = path.resolve(
           __dirname,
           '../assets/closing_bracket'

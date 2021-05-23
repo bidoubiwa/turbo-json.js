@@ -11,9 +11,7 @@ module.exports = config;
 module.exports = async () => {
   return {
     verbose: true,
-    watchPathIgnorePatterns: [
-      '<rootDir>/test-output',
-    ],
+    watchPathIgnorePatterns: ['<rootDir>/test-output'],
     rootDir: '.',
   };
 };

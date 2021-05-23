@@ -1,0 +1,33 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    # trying and staging branches are for BORS config
+    branches:
+      - trying
+      - staging
+      - main
+
+jobs:
+  tests:
+    # Will not run if the event is a PR to bump-meilisearch-v* (so a pre-release PR)
+    # Will still run for each push to bump-meilisearch-v*
+    if: github.event_name != 'pull_request' || !startsWith(github.base_ref, 'bump-meilisearch-v')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["10", "12", "14"]
+    name: integration-tests (Node.js ${{ matrix.node }})
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: print version
+        run: node -v
+      - name: Install dependencies
+        run: yarn --dev
+      - name: Run tests
+        run: yarn test
