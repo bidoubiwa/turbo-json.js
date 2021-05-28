@@ -11,10 +11,10 @@ beforeAll(() => {
 });
 // doesnt work with one file
 test('Tests on 1 empty file', async () => {
-  const res = await combineJson(
-    'misc/one_empty',
-    'test-output/combine_empty.json'
-  );
+  const res = await combineJson({
+    inputDir: 'misc/one_empty',
+    outputFile: 'test-output/combine_empty.json',
+  });
 
   const data = JSON.parse(
     fs.readFileSync(`${process.cwd()}/test-output/combine_empty.json`, 'utf-8')
@@ -25,10 +25,10 @@ test('Tests on 1 empty file', async () => {
 });
 
 test('Tests on multiple empty files', async () => {
-  const res = await combineJson(
-    'misc/multiple_empty',
-    'test-output/combine_multiple_empty.json'
-  );
+  const res = await combineJson({
+    inputDir: 'misc/multiple_empty',
+    outputFile: 'test-output/combine_multiple_empty.json',
+  });
   const data = JSON.parse(
     fs.readFileSync(
       `${process.cwd()}/test-output/combine_multiple_empty.json`,
@@ -41,12 +41,15 @@ test('Tests on multiple empty files', async () => {
 });
 
 test('Tests if on 1 file containing one primitive', async () => {
-  const res = await combineJson(
-    'misc/one_primitive',
-    'test-output/combine_a_single_primitive.json'
-  );
+  const res = await combineJson({
+    inputDir: 'misc/one_primitive',
+    outputFile: 'test-output/combine_a_single_primitive.json',
+  });
   const data = JSON.parse(
-    fs.readFileSync(`${process.cwd()}/test-output/combine_a_single_primitive.json`, 'utf-8')
+    fs.readFileSync(
+      `${process.cwd()}/test-output/combine_a_single_primitive.json`,
+      'utf-8'
+    )
   );
   const expected = [1];
   expect(res).toBe(1);
@@ -54,10 +57,10 @@ test('Tests if on 1 file containing one primitive', async () => {
 });
 
 test('Tests if on 1 files', async () => {
-  const res = await combineJson(
-    'misc/one_file',
-    'test-output/combine_one.json'
-  );
+  const res = await combineJson({
+    inputDir: 'misc/one_file',
+    outputFile: 'test-output/combine_one.json',
+  });
   const data = JSON.parse(
     fs.readFileSync(`${process.cwd()}/test-output/combine_one.json`, 'utf-8')
   );
@@ -67,7 +70,10 @@ test('Tests if on 1 files', async () => {
 });
 
 test('Tests if on all files', async () => {
-  const res = await combineJson('misc', 'test-output/combine_all.json');
+  const res = await combineJson({
+    inputDir: 'misc',
+    outputFile: 'test-output/combine_all.json',
+  });
   const data = JSON.parse(
     fs.readFileSync(`${process.cwd()}/test-output/combine_all.json`, 'utf-8')
   );

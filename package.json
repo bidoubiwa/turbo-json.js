@@ -1,20 +1,24 @@
 {
   "name": "combine-json",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "",
+  "repository": "git://github.com/bidoubiwa/combine-json.git",
   "main": "src/index.js",
   "preferGlobal": true,
-  "bin": "./src/cli.js",
+  "bin": {
+    "json-combine": "./src/cli.js"
+  },
   "scripts": {
     "link": "npm link",
     "lint": "prettier --write .",
     "test": "jest",
     "test:watch": "npx jest --watch"
   },
-  "author": "",
+  "author": "Charlotte Vermandel",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^3.0.0"
+    "chalk": "^3.0.0",
+    "commander": "^7.2.0"
   },
   "devDependencies": {
     "jest": "^26.6.3",
