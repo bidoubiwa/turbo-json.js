@@ -1,13 +1,26 @@
 #!/usr/bin/env node
+const pkg = require('../package.json');
 const combineJson = require('./combine-json');
+const { program } = require('commander');
+
+program
+  .version(pkg.version)
+  .requiredOption(
+    '-i, --input-dir <dir-path>',
+    'Directory in which the json files are present'
+  )
+  .option(
+    '-o, --output-file <file-name>',
+    'File name in which all the json files will be merged',
+    'combine.json'
+  )
+  .parse(process.argv);
 
 (async () => {
   try {
-    if (process.argv.length === 2) {
-      console.log(chalk.red('Error: Missing path argument'));
-    } else {
-      await combineJson(process.argv[2], process.argv[3]);
-    }
+    const options = program.opts();
+    console.log(options);
+    await combineJson(options);
   } catch (e) {
     console.error(e);
     throw e;

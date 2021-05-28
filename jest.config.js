@@ -13,6 +13,6 @@ module.exports = async () => {
     verbose: true,
     watchPathIgnorePatterns: ['<rootDir>/test-output'],
     rootDir: '.',
-    testEnvironment: 'node'
+    testEnvironment: 'node',
   };
 };

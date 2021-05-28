@@ -11,6 +11,7 @@ const {
 const { jsonRootType, closingArrayIndex } = require('./json-root-type');
 
 const BUFFER_SIZE = 8;
+// TODO be able to improve buffer size
 
 async function combine({ inputFiles, inputDirPath, outputFilePath }) {
   createOutputArrayFile(outputFilePath);
@@ -26,6 +27,7 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
       fd: inputFileFd,
       bufferSize: BUFFER_SIZE,
     });
+
     let lastBracket = undefined;
 
     if (isArray) {
@@ -65,8 +67,8 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
 
       await new Promise(function (resolve) {
         comaWrite.write(',', () => {
-          resolve('')
-        })
+          resolve('');
+        });
       });
     } else if (last) {
       let closingBracketWrite = fs.createWriteStream(outputFilePath, {
@@ -75,8 +77,8 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
 
       await new Promise(function (resolve) {
         closingBracketWrite.write(']', () => {
-          resolve('')
-        })
+          resolve('');
+        });
       });
     }
 
@@ -91,7 +93,7 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
   return 1;
 }
 
-async function combineJson(inputDir, outputFile = undefined) {
+async function combineJson({ inputDir, outputFile = 'combine.json' }) {
   try {
     const { inputDirPath, filesName } = inputFilesAndDir({ inputDir });
     const outputFilePath = resolveOutputFilePath({ fileName: outputFile });
