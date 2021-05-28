@@ -1,7 +1,7 @@
 #!/usr/bin/env node
+const { program } = require('commander');
 const pkg = require('../package.json');
 const combineJson = require('./combine-json');
-const { program } = require('commander');
 
 program
   .version(pkg.version)

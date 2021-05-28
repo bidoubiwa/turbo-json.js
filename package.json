@@ -1,21 +1,37 @@
 {
   "name": "combine-json",
+  "description": "Combine with streams multiple json files into one json file.",
   "version": "0.1.0",
-  "description": "",
-  "repository": "git://github.com/bidoubiwa/combine-json.git",
   "main": "src/index.js",
-  "preferGlobal": true,
-  "bin": {
-    "json-combine": "./src/cli.js"
-  },
   "scripts": {
-    "link": "npm link",
+    "start": "src/cli.js",
     "lint": "prettier --write .",
     "test": "jest",
     "test:watch": "npx jest --watch"
   },
-  "author": "Charlotte Vermandel",
-  "license": "ISC",
+  "preferGlobal": true,
+  "bugs": {
+    "url" : "https://github.com/bidoubiwa/combine-json/issues",
+    "email" : "charlottevermandel@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bidoubiwa/combine-json.git"
+  },
+  "author": {
+    "name" : "Charlotte Vermandel",
+    "email" : "charlottevermandel@gmail.com"
+  },
+  "bin": {
+    "combine-json": "./src/cli.js"
+  },
+  "files": [
+    "src/"
+  ],
+  "engines": {
+    "node": ">=0.10.3 <17"
+  },
+  "license": "MIT",
   "dependencies": {
     "chalk": "^3.0.0",
     "commander": "^7.2.0"
