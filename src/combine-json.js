@@ -9,9 +9,9 @@ const {
   fileSize,
 } = require('./file-utils');
 const { jsonRootType, closingArrayIndex } = require('./json-root-type');
+const { verifyJson } = require('./json-validity')
 
-const BUFFER_SIZE = 8;
-// TODO be able to improve buffer size
+const BUFFER_SIZE = 1000;
 
 async function combine({ inputFiles, inputDirPath, outputFilePath }) {
   createOutputArrayFile(outputFilePath);
@@ -21,33 +21,34 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
     let fileName = inputFiles[index];
     let inputFile = `${inputDirPath}${fileName}`;
 
+    await verifyJson({jsonFile: inputFile})
     const inputFileFd = openFile(inputFile);
 
-    const { isArray, typeIndex, empty } = jsonRootType({
+    const { isArray, startPosition, empty } = jsonRootType({
       fd: inputFileFd,
       bufferSize: BUFFER_SIZE,
     });
 
-    let lastBracket = undefined;
+    let stopPosition = undefined;
 
     if (isArray) {
-      lastBracket =
+      stopPosition =
         closingArrayIndex({
-          inputFile,
           fd: inputFileFd,
-          position: fileSize(inputFile) - BUFFER_SIZE,
-        }) - 2;
+          position: (fileSize(inputFile) - BUFFER_SIZE > 0) ? fileSize(inputFile) - BUFFER_SIZE : 0,
+          bufferSize: BUFFER_SIZE
+        });
     }
+
     // open destination file for appending
     var writeStream = fs.createWriteStream(outputFilePath, {
       flags: 'a',
     });
 
     // open source file for reading
-    let startPosition = isArray ? typeIndex + 1 : typeIndex;
     var readStream = fs.createReadStream(inputFile, {
       start: startPosition,
-      end: lastBracket,
+      end: stopPosition,
     });
 
     readStream.pipe(writeStream);
@@ -90,6 +91,7 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
       )
     );
   }
+  await verifyJson({jsonFile: outputFilePath})
   return 1;
 }
 

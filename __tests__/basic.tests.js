@@ -69,6 +69,19 @@ test('Tests if on 1 files', async () => {
   expect(data).toEqual(expected);
 });
 
+test('Tests on 3 array', async () => {
+  const res = await combineJson({
+    inputDir: 'misc/array_test',
+    outputFile: 'test-output/combine_array.json',
+  });
+  const data = JSON.parse(
+    fs.readFileSync(`${process.cwd()}/test-output/combine_array.json`, 'utf-8')
+  );
+  const expected = [{ name: 'far away' }, { name: 'far away and behind' }, 1, 2, 3];
+  expect(res).toBe(1);
+  expect(data).toEqual(expected);
+});
+
 test('Tests if on all files', async () => {
   const res = await combineJson({
     inputDir: 'misc',

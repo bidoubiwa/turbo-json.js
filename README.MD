@@ -1,6 +1,6 @@
-# Combine-json
+# json-stream-concat
 
-Combine-json is a CLI tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
+json-stream-concat is a CLI tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
 
 The output JSON file contains an array with all the inputed JSON files.
 So if your JSON file contained `{ "id": 1 }` it will be stored in the output file like this:
@@ -112,3 +112,8 @@ npx combine-json misc
 ```
 
 it will generate a combined.json file with all the JSON objects found in misc.
+
+## Corner case
+
+The last json shouln't be empty sorry
+- Cannot guarantee validity of json output if input is not valid.
