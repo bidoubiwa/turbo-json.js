@@ -1,6 +1,6 @@
 {
-  "name": "combine-json",
-  "description": "Combine with streams multiple json files into one json file.",
+  "name": "json-boat",
+  "description": "Combine with streams multiple json files into one json array. Read and Write is streamed.",
   "version": "0.1.0",
   "main": "src/index.js",
   "scripts": {

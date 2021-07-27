@@ -1,18 +1,29 @@
-# json-stream-concat
 
-json-stream-concat is a CLI tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
+
+<center>
+
+# json-boat
+
+<img src="assets/boat.png" width=300 />
+
+</center>
+
+json-boat is a tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
+
+Both `read` and `write` actions are done using `streaming`. The maximum data stored in memory is the buffer size.
+
+
+## Input/Output
 
 The output JSON file contains an array with all the inputed JSON files.
-So if your JSON file contained `{ "id": 1 }` it will be stored in the output file like this:
+So if your JSON file contained `{ "id": 1 }` it will be stored in the output file like this `[{"id": 1}]`
+
+Some examples:
 
 Input files:
-
-file 1:
 ```json
 { "id": 1 }
 ```
-
-file 2:
 ```json
 { "id": 2 }
 ```
@@ -55,23 +66,23 @@ Output file:
 CLI:
 
 ```bash
-npx combine-json [options]
+npx json-boat [options]
 ```
 
 Library:
 
 ```bash
 # yarn
-yarn add combine-json
+yarn add json-boat
 
 # npm
-npm install combine-json
+npm install json-boat
 ```
 
 
 ## Usage
 
-Combine-json has two options:
+json-boat takes two parameters:
 
 - Input dir: the path to the directory containing all the jsons.
 - Output file _optional_: path to the output file.
