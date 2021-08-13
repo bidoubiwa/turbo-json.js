@@ -82,10 +82,12 @@ npm install turbo-json.js
 
 ## Usage
 
-turbo-json.js takes two parameters:
+turbo-json.js takes one argument:
 
-- Input dir: the path to the directory containing all the jsons.
-- Output file _optional_: path to the output file.
+- Input directory: the path to the directory containing all the jsons.
+
+and options:
+- Output file _optional_ : path to the output file.
 
 It accepts relative path but also fully qualified paths.
 
