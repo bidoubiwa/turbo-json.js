@@ -2,13 +2,13 @@
 
 <center>
 
-# json-boat
+# turbo-json.js
 
 <img src="assets/boat.png" width=300 />
 
 </center>
 
-json-boat is a tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
+turbo-json.js is a tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
 
 Both `read` and `write` actions are done using `streaming`. The maximum data stored in memory is the buffer size.
 
@@ -66,23 +66,23 @@ Output file:
 CLI:
 
 ```bash
-npx json-boat [options]
+npx turbo-json.js [options]
 ```
 
 Library:
 
 ```bash
 # yarn
-yarn add json-boat
+yarn add turbo-json.js
 
 # npm
-npm install json-boat
+npm install turbo-json.js
 ```
 
 
 ## Usage
 
-json-boat takes two parameters:
+turbo-json.js takes two parameters:
 
 - Input dir: the path to the directory containing all the jsons.
 - Output file _optional_: path to the output file.
@@ -92,12 +92,12 @@ It accepts relative path but also fully qualified paths.
 ### CLI usage:
 
 ```bash
-combine-json --input-dir <dir-path> --output-file <file-path> (default: "combined.json")
+turbo-json --input-dir <dir-path> --output-file <file-path> (default: "combined.json")
 ```
 
 **Example**
 ```bash
-combine-json /data combined_data.json
+turbo-json /data combined_data.json
 ```
 
 ### Library usage
@@ -119,7 +119,7 @@ Using the JSON files present in `misc`, you can observe the outputed file [misc_
 At the root of the repository use the following:
 
 ```bash
-npx combine-json misc
+npx turbo-json misc
 ```
 
 it will generate a combined.json file with all the JSON objects found in misc.
