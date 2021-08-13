@@ -92,12 +92,12 @@ It accepts relative path but also fully qualified paths.
 ### CLI usage:
 
 ```bash
-combine-json --input-dir <dir-path> --output-file <file-path> (default: "combined.json")
+turbo-json --input-dir <dir-path> --output-file <file-path> (default: "combined.json")
 ```
 
 **Example**
 ```bash
-combine-json /data combined_data.json
+turbo-json /data combined_data.json
 ```
 
 ### Library usage
@@ -119,7 +119,7 @@ Using the JSON files present in `misc`, you can observe the outputed file [misc_
 At the root of the repository use the following:
 
 ```bash
-npx combine-json misc
+npx turbo-json misc
 ```
 
 it will generate a combined.json file with all the JSON objects found in misc.
