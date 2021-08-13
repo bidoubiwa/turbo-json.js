@@ -1,5 +1,5 @@
 {
-  "name": "json-boat",
+  "name": "turbo-json.js",
   "description": "Combine with streams multiple json files into one json array. Read and Write is streamed.",
   "version": "0.1.0",
   "main": "src/index.js",
@@ -11,19 +11,19 @@
   },
   "preferGlobal": true,
   "bugs": {
-    "url": "https://github.com/bidoubiwa/combine-json/issues",
+    "url": "https://github.com/bidoubiwa/turbo-json/issues",
     "email": "charlottevermandel@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bidoubiwa/combine-json.git"
+    "url": "git://github.com/bidoubiwa/turbo-json.git"
   },
   "author": {
     "name": "Charlotte Vermandel",
     "email": "charlottevermandel@gmail.com"
   },
   "bin": {
-    "combine-json": "./src/cli.js"
+    "turbo-json": "./src/cli.js"
   },
   "files": [
     "src/"

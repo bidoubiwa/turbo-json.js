@@ -2,13 +2,13 @@
 
 <center>
 
-# json-boat
+# turbo-json.js
 
 <img src="assets/boat.png" width=300 />
 
 </center>
 
-json-boat is a tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
+turbo-json.js is a tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
 
 Both `read` and `write` actions are done using `streaming`. The maximum data stored in memory is the buffer size.
 
@@ -66,23 +66,23 @@ Output file:
 CLI:
 
 ```bash
-npx json-boat [options]
+npx turbo-json.js [options]
 ```
 
 Library:
 
 ```bash
 # yarn
-yarn add json-boat
+yarn add turbo-json.js
 
 # npm
-npm install json-boat
+npm install turbo-json.js
 ```
 
 
 ## Usage
 
-json-boat takes two parameters:
+turbo-json.js takes two parameters:
 
 - Input dir: the path to the directory containing all the jsons.
 - Output file _optional_: path to the output file.
