@@ -1,0 +1,4 @@
+status = [
+  "integration-tests (Node.js 14)",
+  "linter test"
+]
