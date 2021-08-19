@@ -5,6 +5,7 @@ const combineJson = require('./combine-json');
 
 const program = new commander.Command()
 
+
 program
   .argument(
     '<input-directory>',
@@ -28,6 +29,9 @@ program
 
 (async () => {
   try {
+    if (process.argv.length < 3) {
+      console.log( program.helpInformation() );
+    }
     await program.parse()
   } catch (e) {
     console.error(e);

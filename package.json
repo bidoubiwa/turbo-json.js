@@ -5,18 +5,17 @@
   "main": "src/index.js",
   "scripts": {
     "start": "src/cli.js",
-    "lint": "prettier --write .",
     "test": "jest",
     "test:watch": "npx jest --watch"
   },
   "preferGlobal": true,
   "bugs": {
-    "url": "https://github.com/bidoubiwa/turbo-json/issues",
+    "url": "https://github.com/bidoubiwa/turbo-json.js/issues",
     "email": "charlottevermandel@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bidoubiwa/turbo-json.git"
+    "url": "git://github.com/bidoubiwa/turbo-json.js.git"
   },
   "author": {
     "name": "Charlotte Vermandel",
@@ -29,7 +28,7 @@
     "src/"
   ],
   "engines": {
-    "node": ">=0.10.3 <17"
+    "node": ">=14 <15"
   },
   "license": "MIT",
   "dependencies": {

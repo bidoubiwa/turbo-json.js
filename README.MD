@@ -1,5 +1,3 @@
-
-
 <center>
 
 # turbo-json.js
@@ -8,10 +6,16 @@
 
 </center>
 
-turbo-json.js is a tool that combines all json files found in a directory into one big json file using streaming to avoid out-of-memory.
+turbo-json.js is a tool that combines all json files found in a directory into one big json file using **streaming** to avoid out-of-memory.
+
+Example:
+```bash
+turbo-json data
+```
+
+All json files found in `data` directory will be combined into one file that is named `combined.json` par default.
 
 Both `read` and `write` actions are done using `streaming`. The maximum data stored in memory is the buffer size.
-
 
 ## Input/Output
 
@@ -37,7 +41,7 @@ Output file:
 ```
 
 **Array exception**:
-There is one exception to this rule. If your JSON file contains an array, it will be deconstructed in the final file (_could become an option please make an issue if you'd like that_).
+There is one exception to this rule. If your JSON file contains an array, it will be deconstructed/flattened in the final file (_could become an option please make an issue if you'd like that_).
 
 Input files:
 
@@ -94,12 +98,12 @@ It accepts relative path but also fully qualified paths.
 ### CLI usage:
 
 ```bash
-turbo-json --input-dir <dir-path> --output-file <file-path> (default: "combined.json")
+turbo-json <input-directory> --output-file <file-path> (default: "combined.json")
 ```
 
 **Example**
 ```bash
-turbo-json /data combined_data.json
+turbo-json /data -o combined_data.json
 ```
 
 ### Library usage

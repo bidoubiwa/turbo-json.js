@@ -9,7 +9,7 @@ beforeAll(() => {
     fs.mkdirSync(OUTPUT_DIR);
   }
 });
-// doesnt work with one file
+
 test('Tests on 1 empty file', async () => {
   const res = await combineJson({
     inputDir: 'misc/one_empty',
@@ -25,6 +25,22 @@ test('Tests on 1 empty file', async () => {
 });
 
 test('Tests on multiple empty files', async () => {
+  const res = await combineJson({
+    inputDir: 'misc/multiple_empty',
+    outputFile: 'test-output/combine_multiple_empty.json',
+  });
+  const data = JSON.parse(
+    fs.readFileSync(
+      `${process.cwd()}/test-output/combine_multiple_empty.json`,
+      'utf-8'
+    )
+  );
+  const expected = [];
+  expect(res).toBe(1);
+  expect(data).toEqual(expected);
+});
+
+test('Tests on some invalid files and some valid', async () => {
   const res = await combineJson({
     inputDir: 'misc/multiple_empty',
     outputFile: 'test-output/combine_multiple_empty.json',
@@ -97,6 +113,6 @@ test('Tests if on all files', async () => {
 
 afterAll(() => {
   if (fs.existsSync(OUTPUT_DIR)) {
-    rimraf.sync(OUTPUT_DIR);
+    // rimraf.sync(OUTPUT_DIR);
   }
 });
