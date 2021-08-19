@@ -15,7 +15,7 @@ program
   .option(
     '-o, --output-file <file-name>',
     'File name in which all the json files will be merged',
-    'combine.json'
+    'combined.json'
   )
   .action(async (directory, options) => {
     await combineJson({ options, inputDir: directory })
