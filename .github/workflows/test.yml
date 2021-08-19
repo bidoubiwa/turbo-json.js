@@ -28,6 +28,9 @@ jobs:
         run: yarn test
   linter_check:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["14"]
     name: linter test
     steps:
       - uses: actions/checkout@v2
