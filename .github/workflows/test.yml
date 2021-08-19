@@ -28,14 +28,13 @@ jobs:
         run: yarn test
   linter_check:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ["14"]
     name: linter test
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
         uses: actions/setup-node@v1
+        with:
+          node-version: 14
       - name: Install dependencies
         run: yarn --dev
       - name: Run style check
