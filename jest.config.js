@@ -3,9 +3,9 @@
 /** @type {import('@jest/types').Config.InitialOptions} */
 const config = {
   verbose: true,
-};
+}
 
-module.exports = config;
+module.exports = config
 
 // Or async function
 module.exports = async () => {
@@ -14,5 +14,5 @@ module.exports = async () => {
     watchPathIgnorePatterns: ['<rootDir>/test-output'],
     rootDir: '.',
     testEnvironment: 'node',
-  };
-};
+  }
+}

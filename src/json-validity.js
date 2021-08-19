@@ -1,20 +1,22 @@
-const fs = require('fs');
-const Verifier = require('stream-json/utils/Verifier');
-
+const fs = require('fs')
+const Verifier = require('stream-json/utils/Verifier')
 
 async function verifyJson({ jsonFile }) {
+  const verifier = new Verifier()
 
-  const verifier = new Verifier();
-
-  const verifierStream = fs.createReadStream(jsonFile).pipe(verifier);
+  const verifierStream = fs.createReadStream(jsonFile).pipe(verifier)
   await new Promise(function (resolve, rejects) {
     verifierStream.on('close', function () {
-      resolve();
-    });
+      resolve()
+    })
     verifier.on('error', error => {
-      rejects({message: `Json file is not valid: ${jsonFile}: ${error.message}`, file: jsonFile, error: error.message})
-    });
-  });
+      rejects({
+        message: `Json file is not valid: ${jsonFile}: ${error.message}`,
+        file: jsonFile,
+        error: error.message,
+      })
+    })
+  })
 }
 
 module.exports = { verifyJson }
