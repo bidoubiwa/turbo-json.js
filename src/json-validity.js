@@ -1,4 +1,3 @@
-const { rejects } = require('assert');
 const fs = require('fs');
 const Verifier = require('stream-json/utils/Verifier');
 

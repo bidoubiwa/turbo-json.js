@@ -5,7 +5,6 @@
   "main": "src/index.js",
   "scripts": {
     "start": "src/cli.js",
-    "lint": "prettier --write .",
     "test": "jest",
     "test:watch": "npx jest --watch"
   },
@@ -29,7 +28,7 @@
     "src/"
   ],
   "engines": {
-    "node": ">=0.10.3 <17"
+    "node": ">=12 <15"
   },
   "license": "MIT",
   "dependencies": {
