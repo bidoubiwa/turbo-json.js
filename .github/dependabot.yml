@@ -8,7 +8,7 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - skip-changelog
-      - dependencies
+      - dependency
     versioning-strategy: increase
     rebase-strategy: disabled
     ignore:
