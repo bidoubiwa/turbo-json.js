@@ -2,3 +2,6 @@ status = [
   "integration-tests (Node.js 14)",
   "linter test"
 ]
+
+# 1 hour timeout
+timeout-sec = 3600
