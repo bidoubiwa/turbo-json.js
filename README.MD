@@ -1,8 +1,6 @@
+<h1 align="center">Turbo 🐡 JSON </h1>
+
 <p align="center">
-  
-  <h1 align="center">Turbo 🐡 JSON </h1>
-
-
   <img src="assets/boat.png" width=300 />
   
   <!-- <a href="https://www.npmjs.com/package/meilisearch"><img src="https://img.shields.io/npm/v/meilisearch.svg" alt="npm version"></a> -->
@@ -10,6 +8,7 @@
   <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="Prettier"></a>
   <a href="https://github.com/bidoubiwa/turbo-json.js/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-informational" alt="License"></a>
   <a href="https://app.bors.tech/repositories/36206"><img src="https://bors.tech/images/badge_small.svg" alt="Bors enabled"></a>
+
 </p>
 
 turbo-json.js is a tool that combines all json files found in a directory into one big json file using **streaming** to avoid out-of-memory.
