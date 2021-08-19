@@ -1,11 +1,10 @@
 <p align="center">
+  
+  <h1 align="center">Turbo 🐡 JSON </h1>
 
-# turbo-json.js
 
-<img src="assets/boat.png" width=300 />
-</p>
-
-<p align="center">
+  <img src="assets/boat.png" width=300 />
+  
   <!-- <a href="https://www.npmjs.com/package/meilisearch"><img src="https://img.shields.io/npm/v/meilisearch.svg" alt="npm version"></a> -->
   <a href="https://github.com/bidoubiwa/turbo-json.js/actions"><img src="https://github.com/bidoubiwa/turbo-json.js/workflows/Tests/badge.svg" alt="Tests"></a>
   <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="Prettier"></a>
@@ -16,7 +15,8 @@
 turbo-json.js is a tool that combines all json files found in a directory into one big json file using **streaming** to avoid out-of-memory.
 
 ```bash
-npx turbo-json data/ # Outputs `combine.json` file containing the content of all json files found in this directory
+npx turbo-json data/ 
+# Outputs `combined.json` file containing the content of all json files found in the data/ directory
 ```
 
 All json files found in `data` directory will be combined into one file that is named `combined.json` par default.

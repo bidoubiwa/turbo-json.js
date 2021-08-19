@@ -107,7 +107,7 @@ async function combine({ inputFiles, inputDirPath, outputFilePath }) {
   return 1
 }
 
-async function combineJson({ inputDir, outputFile = 'combine.json' }) {
+async function combineJson({ inputDir, outputFile = 'combined.json' }) {
   const { inputDirPath, filesName } = inputFilesAndDir({ inputDir })
   const outputFilePath = resolveOutputFilePath({ fileName: outputFile })
   const inputFiles = filterNonJson({ filesName })
