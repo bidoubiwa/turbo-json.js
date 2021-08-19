@@ -11,12 +11,12 @@
   },
   "preferGlobal": true,
   "bugs": {
-    "url": "https://github.com/bidoubiwa/turbo-json/issues",
+    "url": "https://github.com/bidoubiwa/turbo-json.js/issues",
     "email": "charlottevermandel@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bidoubiwa/turbo-json.git"
+    "url": "git://github.com/bidoubiwa/turbo-json.js.git"
   },
   "author": {
     "name": "Charlotte Vermandel",
