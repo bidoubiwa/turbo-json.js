@@ -40,7 +40,7 @@ test('Tests on multiple empty files', async () => {
   expect(data).toEqual(expected);
 });
 
-test.only('Tests on some invalid files and some valid', async () => {
+test('Tests on some invalid files and some valid', async () => {
   const res = await combineJson({
     inputDir: 'misc/multiple_empty',
     outputFile: 'test-output/combine_multiple_empty.json',

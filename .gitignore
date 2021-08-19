@@ -97,3 +97,7 @@ combined.json
 # Ignore artifacts:
 build
 coverage
+
+# Misc
+combine.json
+test-output

@@ -13,8 +13,7 @@ async function verifyJson({ jsonFile }) {
       resolve();
     });
     verifier.on('error', error => {
-      console.log(error)
-      rejects(`Json file is not valid: ${jsonFile}`)
+      rejects({message: `Json file is not valid: ${jsonFile}: ${error.message}`, file: jsonFile, error: error.message})
     });
   });
 }
