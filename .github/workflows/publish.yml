@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-          registry-url: https://registry.npmjs.org/
+          registry-url: https://npm.pkg.github.com/
       - name: Check release validity
         run: sh scripts/check-release.sh
       - name: Publish
