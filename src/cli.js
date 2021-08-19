@@ -1,16 +1,12 @@
 #!/usr/bin/env node
-const commander = require('commander');
-const pkg = require('../package.json');
-const combineJson = require('./combine-json');
+const commander = require('commander')
+const pkg = require('../package.json')
+const combineJson = require('./combine-json')
 
 const program = new commander.Command()
 
-
 program
-  .argument(
-    '<input-directory>',
-    'Directory from witch to fetch the json files'
-  )
+  .argument('<input-directory>', 'Directory from witch to fetch the json files')
   .version(pkg.version)
   .option(
     '-b, --buffer-size <integer>',
@@ -22,19 +18,16 @@ program
     'combine.json'
   )
   .action(async (directory, options) => {
-    await combineJson({ options, inputDir: directory});
-  });
-
-
-
-(async () => {
+    await combineJson({ options, inputDir: directory })
+  })
+;(async () => {
   try {
     if (process.argv.length < 3) {
-      console.log( program.helpInformation() );
+      console.log(program.helpInformation())
     }
     await program.parse()
   } catch (e) {
-    console.error(e);
-    throw e;
+    console.error(e)
+    throw e
   }
-})();
+})()
