@@ -39,3 +39,7 @@ jobs:
         run: yarn --dev
       - name: Run style check
         run: yarn lint
+      - name: Yaml Style
+        uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .yamllint.yml

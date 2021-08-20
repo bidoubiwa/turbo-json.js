@@ -32,8 +32,8 @@ jobs:
         with:
           node-version: '14.x'
           registry-url: 'https://npm.pkg.github.com'
-          # Defaults to the user or organization that owns the workflow file
-          scope: '@octocat'
+      - name: Check release validity
+        run: sh scripts/check-release.sh
       - run: npm install
       - run: npm publish
         env:
