@@ -63,6 +63,7 @@ and options:
 - Output file _optional_ : path to the output file (default: `combined.json`).
 - Validate Input JSON's: All input JSON files are validated to be a correct [JSON](https://www.json.org/json-en.html) (default: `true`).
 - Validate Output JSON's: Validate if the outputed JSON is a correct [JSON](https://www.json.org/json-en.html) (default: `false`).
+- Quiet mode : no logs are outputed (default: `false`).
 
 It accepts relative path but also fully qualified paths.
 
@@ -70,7 +71,7 @@ It accepts relative path but also fully qualified paths.
 
 Usage:
 ```bash
-cli [options] <input-directory>
+turbo-json [options] <input-directory>
 ```
 
 Options:
@@ -78,10 +79,7 @@ Options:
   -o, --output-file <file-name>      File name in which all the json files will be merged (default: "combined.json")
   -I, --validate-input <file-name>   Check if input JSON files are valid (default: true)
   -O, --validate-output <file-name>  Check if output JSON is a valid JSON (default: false)
-```
-
-```bash
-turbo-json <input-directory> --output-file <file-path> (default: "combined.json")
+  -q, --quiet                        Quiet mode, no logs are outputed (default: false)
 ```
 
 **Example**
@@ -96,7 +94,7 @@ turbo-json /data -o combined_data.json
 const { combineJson } = require('./src');
 
 (async () => {
-  await combineJson('misc', { outputFile: 'combined_data.json', validateInput: true, validateOutput: false });
+  await combineJson('misc', { outputFile: 'combined_data.json', validateInput: true, validateOutput: false, quiet: false });
 })();
 ```
 
