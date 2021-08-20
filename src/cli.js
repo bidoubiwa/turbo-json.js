@@ -24,7 +24,7 @@ program
     'Check if output JSON is a valid JSON',
     false
   )
-  .option('-q, --quiet', 'Quiet mode, no logs are outputed', true)
+  .option('-q, --quiet', 'Quiet mode, no logs are outputed', false)
   .action(async (directory, options) => {
     await combineJson(directory, options)
   })
