@@ -63,7 +63,7 @@ and options:
 - Output file _optional_ : path to the output file (default: `combined.json`).
 - Validate Input JSON's: All input JSON files are validated to be a correct [JSON](https://www.json.org/json-en.html) (default: `true`).
 - Validate Output JSON's: Validate if the outputed JSON is a correct [JSON](https://www.json.org/json-en.html) (default: `false`).
-- Quiet mode : no logs are outputed (default: `false`)
+- Quiet mode : no logs are outputed (default: `false`).
 
 It accepts relative path but also fully qualified paths.
 
