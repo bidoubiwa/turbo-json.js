@@ -2,7 +2,7 @@
 
 <p align="center">
   <img src="assets/boat.png" width=300 />
-  
+
   <!-- <a href="https://www.npmjs.com/package/meilisearch"><img src="https://img.shields.io/npm/v/meilisearch.svg" alt="npm version"></a> -->
   <a href="https://github.com/bidoubiwa/turbo-json.js/actions"><img src="https://github.com/bidoubiwa/turbo-json.js/workflows/Tests/badge.svg" alt="Tests"></a>
   <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="Prettier"></a>
@@ -14,7 +14,7 @@
 turbo-json.js is a tool that combines all json files found in a directory into one big json file using **streaming** to avoid out-of-memory.
 
 ```bash
-npx turbo-json data/ 
+npx turbo-json data/
 # Outputs `combined.json` file containing the content of all json files found in the data/ directory
 ```
 
@@ -24,10 +24,82 @@ Both `read` and `write` actions are done using `streaming`. The maximum data sto
 
 ## Table of Contents
 
-- [How is it combined](#how-is-it-combined)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Try it out](#try-it-out)
+- [How is it combined](#how-is-it-combined)
+- [Validate JSON format](#validate-json-format)
+- [Example](#example)
+
+## Installation
+
+### CLI:
+
+Global install to have the CLI accessible from everywhere on your operating system.
+```bash
+npm install -g turbo-json.js # install globaly
+```
+
+No installation needed when using `npx`.
+```bash
+npx turbo-json.js [options]
+```
+
+### Library:
+```bash
+# yarn
+yarn add turbo-json.js
+
+# npm
+npm install turbo-json.js
+```
+
+## Usage
+
+turbo-json.js takes one argument:
+
+- Input directory: the path to the directory containing all the jsons.
+
+and options:
+- Output file _optional_ : path to the output file (default: `combined.json`).
+- Validate Input JSON's: All input JSON files are validated to be a correct [JSON](https://www.json.org/json-en.html) (default: `true`).
+- Validate Output JSON's: Validate if the outputed JSON is a correct [JSON](https://www.json.org/json-en.html) (default: `false`).
+
+It accepts relative path but also fully qualified paths.
+
+### CLI usage:
+
+Usage:
+```bash
+cli [options] <input-directory>
+```
+
+Options:
+```
+  -o, --output-file <file-name>      File name in which all the json files will be merged (default: "combined.json")
+  -I, --validate-input <file-name>   Check if input JSON files are valid (default: true)
+  -O, --validate-output <file-name>  Check if output JSON is a valid JSON (default: false)
+```
+
+```bash
+turbo-json <input-directory> --output-file <file-path> (default: "combined.json")
+```
+
+**Example**
+```bash
+turbo-json /data -o combined_data.json
+```
+
+### Library usage
+
+
+```js
+const { combineJson } = require('./src');
+
+(async () => {
+  await combineJson('misc', { outputFile: 'combined_data.json', validateInput: true, validateOutput: false });
+})();
+```
+
 
 ## How is it combined
 
@@ -82,67 +154,18 @@ Output file:
 ```
 
 
-## Installation
+## Validate Json Format
 
-### CLI:
+By default the tool supposes that your JSON files are correctly formated. If you'd like to check if it is well formated before concatenation the `validateInput` options should be set to true.
+By doing so, only the well formated JSON's are concatenated but this comes at the price that every file will be stream-read two times. Once for validation and once for writing.
 
-Global install to have the CLI accessible from everywhere on your operating system.
-```bash
-npm install -g turbo-json.js # install globaly
-```
+The same is possible to validate the output file using `validateOutput`.
 
-No installation needed when using `npx`.
-```bash
-npx turbo-json.js [options]
-```
+Validity is based on the description provided by [json.org](https://www.json.org/json-en.html).
 
-### Library:
-```bash
-# yarn
-yarn add turbo-json.js
-
-# npm
-npm install turbo-json.js
-```
-
-
-## Usage
-
-turbo-json.js takes one argument:
-
-- Input directory: the path to the directory containing all the jsons.
-
-and options:
-- Output file _optional_ : path to the output file.
-
-It accepts relative path but also fully qualified paths.
-
-### CLI usage:
-
-```bash
-turbo-json <input-directory> --output-file <file-path> (default: "combined.json")
-```
-
-**Example**
-```bash
-turbo-json /data -o combined_data.json
-```
-
-### Library usage
-
-```js
-const { combineJson } = require('./src');
-
-(async () => {
-  await combineJson({ inputDir: 'misc', outputFile: 'combined_data.json' });
-})();
-```
-
-### Example
+## Example
 
 Using the JSON files present in `misc`, you can observe the outputed file [misc_output.json](./misc_output.json)
-
-## Try it out
 
 At the root of the repository use the following:
 

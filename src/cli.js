@@ -17,8 +17,18 @@ program
     'File name in which all the json files will be merged',
     'combined.json'
   )
+  .option(
+    '-I, --validate-input <file-name>',
+    'Check if JSON file is valid',
+    false
+  )
+  .option(
+    '-O, --validate-output <file-name>',
+    'Check if output JSON is a valid JSON',
+    false
+  )
   .action(async (directory, options) => {
-    await combineJson({ options, inputDir: directory })
+    await combineJson(directory, options)
   })
 ;(async () => {
   try {
