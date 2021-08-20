@@ -24,6 +24,7 @@ async function combine({
   outputFilePath,
   validateInput,
   validateOutput,
+  quiet,
 }) {
   createOutputArrayFile(outputFilePath)
   const numberOfFiles = inputFiles.length
@@ -89,15 +90,17 @@ async function combine({
         })
       })
 
-      logSuccessfullWrite(fileName, index, numberOfFiles)
+      if (!quiet) logSuccessfullWrite(fileName, index, numberOfFiles)
     } catch (e) {
       if (e.file) {
-        logFailedValidityCheck(e)
+        if (!quiet) logFailedValidityCheck(e)
       } else {
-        logFailedValidityCheck({
-          file: inputFiles[index],
-          error: e.message,
-        })
+        if (!quiet) {
+          logFailedValidityCheck({
+            file: inputFiles[index],
+            error: e.message,
+          })
+        }
       }
     }
   }
@@ -116,6 +119,7 @@ async function combine({
       await verifyJson({ jsonFile: outputFilePath })
     } catch (e) {
       logFailedOutputValidityCheck(e)
+      throw e
     }
   }
   return 1
@@ -127,6 +131,7 @@ async function combineJson(
     outputFile = 'combined.json',
     validateInput = false,
     validateOutput = false,
+    quiet = false,
   }
 ) {
   const { inputDirPath, filesName } = inputFilesAndDir({ inputDir })
@@ -138,6 +143,7 @@ async function combineJson(
     outputFilePath,
     validateInput,
     validateOutput,
+    quiet,
   })
 }
 
