@@ -24,7 +24,7 @@
     "email": "charlottevermandel@gmail.com"
   },
   "bin": {
-    "turbo-json": "./src/cli.js"
+    "turbo-json.js": "./src/cli.js"
   },
   "files": [
     "src/"
@@ -34,16 +34,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "chalk": "^3.0.0",
-    "commander": "^8.2.0",
-    "stream-json": "^1.7.2"
+    "chalk": "^4.1.2",
+    "commander": "^8.3.0",
+    "stream-json": "^1.7.3"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
-    "rimraf": "^3.0.2",
-    "eslint": "^7.29.0",
+    "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "prettier": "^2.3.2"
+    "jest": "^27.3.1",
+    "prettier": "^2.3.2",
+    "rimraf": "^3.0.2"
   }
 }
