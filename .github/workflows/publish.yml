@@ -13,6 +13,10 @@ jobs:
         with:
           node-version: 12
           registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
       - name: Check release validity
         run: sh scripts/check-release.sh
       - name: Publish
@@ -33,7 +37,10 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
       - name: Check release validity
         run: sh scripts/check-release.sh
-      - run: npm install
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
