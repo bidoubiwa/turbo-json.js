@@ -5,7 +5,7 @@ const logSuccessfullWrite = (fileName, index, numberOfFiles) => {
     chalk.green(
       'file: ' +
         chalk.blue.underline.bold(fileName) +
-        ` has been added! index: ${index}, number of files: ${numberOfFiles}`
+        ` has been added! index: ${index}/${numberOfFiles}`
     )
   )
 }

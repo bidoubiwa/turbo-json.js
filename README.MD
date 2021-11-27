@@ -39,7 +39,8 @@ Global install to have the CLI accessible from everywhere on your operating syst
 npm install -g turbo-json.js # install globaly
 ```
 
-No installation needed when using `npx`.
+No installation needed when using [npx](https://www.npmjs.com/package/npx).
+
 ```bash
 npx turbo-json.js [options]
 ```

@@ -22,7 +22,6 @@ function findClosingArrayIndex({ fd, buffer, position }) {
 
 function closingArrayIndex({ fd, position, bufferSize = 1000 }) {
   let buffer = new Int8Array(bufferSize)
-
   return findClosingArrayIndex({ fd, buffer, position })
 }
 
