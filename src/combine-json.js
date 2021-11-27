@@ -16,8 +16,6 @@ const {
   logFailedOutputValidityCheck,
 } = require('./log')
 
-const BUFFER_SIZE = 1000
-
 async function combine({
   inputFiles,
   inputDirPath,
@@ -25,6 +23,7 @@ async function combine({
   validateInput,
   validateOutput,
   quiet,
+  bufferSize,
 }) {
   createOutputArrayFile(outputFilePath)
   const numberOfFiles = inputFiles.length
@@ -41,7 +40,7 @@ async function combine({
 
       const { isArray, startPosition, empty } = jsonRootType({
         fd: inputFileFd,
-        bufferSize: BUFFER_SIZE,
+        bufferSize: bufferSize,
       })
 
       let stopPosition = undefined
@@ -49,11 +48,12 @@ async function combine({
       if (isArray) {
         stopPosition = closingArrayIndex({
           fd: inputFileFd,
+
           position:
-            fileSize(inputFile) - BUFFER_SIZE > 0
-              ? fileSize(inputFile) - BUFFER_SIZE
+            fileSize(inputFile) - bufferSize > 0
+              ? fileSize(inputFile) - bufferSize
               : 0,
-          bufferSize: BUFFER_SIZE,
+          bufferSize: bufferSize,
         })
       }
 
@@ -132,6 +132,7 @@ async function combineJson(
     validateInput = false,
     validateOutput = false,
     quiet = false,
+    bufferSize = 1000,
   }
 ) {
   const { inputDirPath, filesName } = inputFilesAndDir({ inputDir })
@@ -144,6 +145,7 @@ async function combineJson(
     validateInput,
     validateOutput,
     quiet,
+    bufferSize,
   })
 }
 

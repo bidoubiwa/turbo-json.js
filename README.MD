@@ -1,3 +1,9 @@
+- [ ] buffer size
+- [ ] formatting
+- [ ] rename files
+- [ ] files array
+- [ ] rollup build
+
 <h1 align="center">Turbo 🐡 JSON </h1>
 
 <p align="center">
