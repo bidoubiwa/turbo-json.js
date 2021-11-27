@@ -24,7 +24,12 @@ program
     'Check if output JSON is a valid JSON',
     false
   )
-  .option('-q, --quiet', 'Quiet mode, no logs are outputed', true)
+  .option('-q, --quiet', 'Quiet mode, no logs are outputed', false)
+  .option(
+    '-b, --buffer-size <number>',
+    'Size of the buffer containing the maximum data kept in memory at any time',
+    1000
+  )
   .action(async (directory, options) => {
     await combineJson(directory, options)
   })
