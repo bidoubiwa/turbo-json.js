@@ -6,20 +6,23 @@ on:
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
+    name: Node.js Package
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
       - name: Check release validity
         run: sh scripts/check-release.sh
       - name: Publish
         run: npm publish .
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-          name: Node.js Package
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
   publish-github:
     runs-on: ubuntu-latest
     permissions:
@@ -30,11 +33,14 @@ jobs:
       # Setup .npmrc file to publish to GitHub Packages
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
-          registry-url: 'https://npm.pkg.github.com'
+          node-version: "14.x"
+          registry-url: "https://npm.pkg.github.com"
       - name: Check release validity
         run: sh scripts/check-release.sh
-      - run: npm install
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN  }}
