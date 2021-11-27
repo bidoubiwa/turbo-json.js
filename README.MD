@@ -20,7 +20,7 @@
 turbo-json.js is a tool that combines all json files found in a directory into one big json file using **streaming** to avoid out-of-memory.
 
 ```bash
-npx turbo-json data/
+npx turbo-json.js data/
 # Outputs `combined.json` file containing the content of all json files found in the data/ directory
 ```
 
@@ -174,7 +174,7 @@ Using the JSON files present in `misc`, you can observe the outputed file [misc_
 At the root of the repository use the following:
 
 ```bash
-npx turbo-json misc
+npx turbo-json.js misc
 ```
 
 it will generate a combined.json file with all the JSON objects found in misc.
