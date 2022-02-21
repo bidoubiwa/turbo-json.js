@@ -36,7 +36,7 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
-    "stream-json": "^1.7.3"
+    "stream-json": "^1.7.4"
   },
   "devDependencies": {
     "eslint": "^8.2.0",
